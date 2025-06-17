@@ -1,0 +1,25 @@
+﻿CREATE TABLE Journals (
+  Id INT IDENTITY PRIMARY KEY,
+  Name NVARCHAR(200) NOT NULL,
+  Issn NVARCHAR(50) NOT NULL,
+  Publisher NVARCHAR(200) NOT NULL
+);
+CREATE TABLE Authors (
+  Id INT IDENTITY PRIMARY KEY,
+  FirstName NVARCHAR(100) NOT NULL,
+  LastName NVARCHAR(100) NOT NULL,
+  Affiliation NVARCHAR(200) NOT NULL
+);
+CREATE TABLE Articles (
+  Id INT IDENTITY PRIMARY KEY,
+  Title NVARCHAR(300) NOT NULL,
+  Abstract NVARCHAR(MAX) NOT NULL,
+  PublicationDate DATE NOT NULL,
+  JournalId INT NOT NULL 
+    REFERENCES Journals(Id)
+);
+CREATE TABLE ArticleAuthors (
+  ArticleId INT NOT NULL REFERENCES Articles(Id),
+  AuthorId  INT NOT NULL REFERENCES Authors(Id),
+  PRIMARY KEY (ArticleId, AuthorId)
+);
